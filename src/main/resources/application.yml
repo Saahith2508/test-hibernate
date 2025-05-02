@@ -1,0 +1,154 @@
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: DEBUG
+    org.hibernate.orm.jdbc.bind: INFO
+    net.ttddyy.dsproxy.listener: TRACE
+    org.hibernate.stat: INFO
+
+spring:
+  application:
+    environment: c-qa4
+    name: g2-member-billing-services
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    validation-query: SELECT 1
+    test-on-borrow: true
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 5
+      connection-timeout: 120000
+      max-lifetime: 1800000
+      idle-timeout: 30000
+      validation-timeout: 5000  # Instead of `validation-query`
+      initialization-fail-timeout: 0  # To prevent failing on startup
+    jpa:
+      show-sql: true
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL5Dialect
+          format_sql: true
+  oac-datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    validation-query: SELECT 1
+    test-on-borrow: true
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 5
+      connection-timeout: 120000
+      max-lifetime: 1800000
+      idle-timeout: 30000
+      validation-timeout: 5000  # Instead of `validation-query`
+      initialization-fail-timeout: 0  # To prevent failing on startup
+    jpa:
+      show-sql: false
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL5Dialect
+          format_sql: false
+  oac-master-datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    validation-query: SELECT 1
+    test-on-borrow: true
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 5
+      connection-timeout: 120000
+      max-lifetime: 1800000
+      idle-timeout: 30000
+      validation-timeout: 5000  # Instead of `validation-query`
+      initialization-fail-timeout: 0  # To prevent failing on startup
+    jpa:
+      show-sql: false
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL5Dialect
+          format_sql: false
+  oac-member-archive-datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    validation-query: SELECT 1
+    test-on-borrow: true
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 5
+      connection-timeout: 120000
+      max-lifetime: 1800000
+      idle-timeout: 30000
+      validation-timeout: 5000  # Instead of `validation-query`
+      initialization-fail-timeout: 0  # To prevent failing on startup
+    jpa:
+      show-sql: false
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL5Dialect
+          format_sql: false
+  member-billing-archive-datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    validation-query: SELECT 1
+    test-on-borrow: true
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 5
+      connection-timeout: 120000
+      max-lifetime: 1800000
+      idle-timeout: 30000
+      validation-timeout: 5000  # Instead of `validation-query`
+      initialization-fail-timeout: 0  # To prevent failing on startup
+    jpa:
+      show-sql: false
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL5Dialect
+          format_sql: false
+  jpa:
+    show-sql: false
+    properties:
+      javax.persistence.query.timeout: 120000
+      hibernate:
+        generate_statistics: false
+        format_sql: false
+        enable_lazy_load_no_trans: true
+        jdbc:
+          time_zone: UTC
+        session:
+          events.log.LOG_QUERIES_SLOWER_THAN_MS: 300
+
+---
+spring:
+  config:
+    activate:
+      on-profile: c-qa5-hikari
+  oac-datasource:
+    jdbcUrl: jdbc:mariadb://c-oac-qa4db.copart.com:3111/oac_member_partition?autoReconnect=true&connectTimeout=120000&socketTimeout=120000
+    driverClassName: org.mariadb.jdbc.Driver
+    username: member_billing_app_usr
+    password: 'Bvl@4KORApbp'
+  oac-master-datasource:
+    jdbcUrl: jdbc:mariadb://c-oac-qa4db.copart.com:3111/oac_master?autoReconnect=true&connectTimeout=120000&socketTimeout=120000
+    driverClassName: org.mariadb.jdbc.Driver
+    username: oac_mbs_app_usr
+    password: '7mROnQAz5b#P'
+  datasource:
+    jdbcUrl: jdbc:mariadb://c-oac-qa4db.copart.com:3111/member_billing_partition?autoReconnect=true&connectTimeout=120000&socketTimeout=120000
+    driverClassName: org.mariadb.jdbc.Driver
+    username: member_billing_app_usr
+    password: 'Bvl@4KORApbp'
+  oac-member-archive-datasource:
+    jdbcUrl: jdbc:mariadb://c-archive-qadb.copart.com:3111/oac_member_archive?autoReconnect=true&connectTimeout=120000&socketTimeout=120000
+    driverClassName: org.mariadb.jdbc.Driver
+    username: oac_mbs_app_usr
+    password: 'dfidbdkM4T*r7ute'
+  member-billing-archive-datasource:
+    jdbcUrl: jdbc:mariadb://c-archive-qadb.copart.com:3111/member_billing_archive?autoReconnect=true&connectTimeout=120000&socketTimeout=120000
+    driverClassName: org.mariadb.jdbc.Driver
+    username: oac_mbs_app_usr
+    password: 'dfidbdkM4T*r7ute'
+
+
